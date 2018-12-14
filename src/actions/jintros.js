@@ -1,17 +1,20 @@
 import uuid from 'uuid';
 import shortid from 'shortid';
 
-export const dateNow = () => {
+const dateNow = () => {
   var d = new Date();
   return d.getTime();
 };
+
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+?');
+const shortId = shortid.generate();
 
 // ADD_JINTRO
 export const addJintro = (
   {
     destinationUrl = '',
     campaignUrl = '',
-    shortUrl = shortid.generate(),
+    shortUrl = shortId,
     title = '',
     note = '',
     hits = 0

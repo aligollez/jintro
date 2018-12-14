@@ -4,6 +4,11 @@ export const setTextFilter = (text = '') => ({
   text
 });
 
+// SORT_BY_TITLE
+export const sortByTitle = () => ({
+  type: 'SORT_BY_TITLE'
+});
+
 // SORT_BY_HITS
 export const sortByHits = () => ({
   type: 'SORT_BY_HITS'

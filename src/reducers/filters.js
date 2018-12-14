@@ -12,6 +12,11 @@ export default (state = filterReducerDefaultState, action) => {
         ...state,
         text: action.text
       };
+    case 'SORT_BY_TITLE':
+      return {
+        ...state,
+        sortBy: 'title'
+      };
     case 'SORT_BY_HITS':
       return {
         ...state,

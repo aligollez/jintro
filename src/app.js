@@ -11,6 +11,22 @@ import './styles/styles.scss';
 
 const store = configureStore();
 
+store.dispatch(addJintro({ title: 'Amazon Offer', shortUrl: 'amazon', hits: 150}));
+
+setTimeout(() => {
+  store.dispatch(addJintro({ title: 'CJ Offer', hits: 50}));
+}, 2000);
+
+setTimeout(() => {
+  store.dispatch(addJintro({ title: 'Clickbank Offer', shortUrl: 'offer', hits: 100}));
+}, 3000);
+
+const state = store.getState();
+const VisibleJintros = getVisibleJintros(state.jintros, state.filters);
+console.log(VisibleJintros);
+
+console.log(window.location.host);
+
 const jsx = (
   <Provider store={store}>
     <AppRouter />

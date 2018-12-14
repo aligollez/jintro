@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect  } from 'react-redux';
+import JintroListItem from './JintroListItem';
+import selectJintro from '../selectors/jintros';
 
 const JintroList = (props) => (
   <div>
     <h1>Jintro List</h1>
-    {props.name}
+    {props.jintros.map((jintro) => {
+      return <JintroListItem key={jintro.id} {...jintro} />
+    })}
   </div>
 );
 
-const ConnectedJintroList = connect(() => {
+const mapStateToProps = (state) => {
   return {
-    name: "PG"
+    jintros: selectJintro(state.jintros, state.filters)
   };
-})(JintroList);
+};
 
-export default ConnectedJintroList;
+export default connect(mapStateToProps)(JintroList);
