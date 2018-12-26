@@ -17,7 +17,7 @@ export const addJintro = (
     shortUrl = shortId,
     title = '',
     note = '',
-    hits = 0
+    hits = 0    
   } = {}
 ) => (
   {
@@ -30,7 +30,8 @@ export const addJintro = (
     title,
     note,
     hits,
-    createdAt: dateNow()
+    createdAt: dateNow(),
+    isJintro: true
   }
 });
 

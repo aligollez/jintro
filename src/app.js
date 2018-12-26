@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { addJintro } from './actions/jintros';
@@ -29,7 +30,9 @@ console.log(VisibleJintros);
 
 const jsx = (
   <Provider store={store}>
-    <AppRouter />
+    <Router>
+      <AppRouter />
+    </Router>    
   </Provider>
 );
 

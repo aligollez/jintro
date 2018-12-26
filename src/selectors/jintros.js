@@ -2,17 +2,14 @@ export default (jintros, { text, sortBy, startDate, endDate }) => {
   return jintros.filter((jintro) => {
     const startDateMatch = typeof startDate !== 'number' || jintro.createdAt >= startDate;
     const endDateMatch = typeof endDate !== 'number' || jintro.createdAt <= endDate;
-    // const titleMatch = jintro.title.toLowerCase().includes(text.toLowerCase());
-    // const noteMatch = jintro.note.toLowerCase().includes(text.toLowerCase());
-    // const textMatch = titleMatch || noteMatch;
     
-    // const textMatch =  ['title', 'note']
-    //   .map(prop => jintro[prop].toLowerCase())
-    //   .some(s => s.includes(text.toLowerCase()));
+    const textMatch =  ['title', 'note']
+      .map(prop => jintro[prop].toLowerCase())
+      .some(s => s.includes(text.toLowerCase()));
 
-    const textMatch = [jintro.title, jintro.note]
-      .some(s => s.toLowerCase()
-      .includes(text.toLowerCase()));
+    // const textMatch = [jintro.title, jintro.note]
+    //   .some(s => s.toLowerCase()
+    //   .includes(text.toLowerCase()));
 
     return startDateMatch && endDateMatch && textMatch;
   }).sort((a, b) => {
