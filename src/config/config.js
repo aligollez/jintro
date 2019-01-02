@@ -1,0 +1,1 @@
+export const homePath = window.location.pathname.includes('home');

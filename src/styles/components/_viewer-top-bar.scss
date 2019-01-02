@@ -1,0 +1,30 @@
+.viewer-top-bar {
+  background: #da3b3b;
+  box-sizing: border-box;
+  color: #ffffff;
+  height: 40px;
+  left:0;
+  margin:0;
+  padding:10px;
+  position: fixed;
+  text-align: center;
+  top:0;
+  width:100%;
+  .destination-url {
+    color: #ffffff;
+    display: inline-block;
+    text-decoration: none;
+    transition: all ease .3s;
+    &:hover {
+      color: orange 
+    }
+  }
+}
+
+.viewer-iframe {
+  position: fixed;
+  width:100%;
+  height: 100%;
+  left:0;
+  top:40px;
+}
