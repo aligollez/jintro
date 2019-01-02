@@ -9,7 +9,9 @@
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
-    "play": "babel src/playground/build-it-visible.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "play": "babel src/playground/build-it-visible.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "start": "node server/server.js",
+    "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
     "babel-cli": "6.24.1",
@@ -22,6 +24,7 @@
     "babel-preset-react": "6.24.1",
     "concurrently": "^4.0.1",
     "css-loader": "0.28.4",
+    "express": "^4.16.4",
     "extract-text-webpack-plugin": "3.0.0",
     "node-sass": "4.5.3",
     "normalize.css": "7.0.0",

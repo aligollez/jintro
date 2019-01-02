@@ -1,2 +1,8 @@
 # NodeJS Modules
 node_modules/
+
+#Webpack Files
+public/bundle.js
+public/bundle.js.map
+public/styles.css
+public/styles.css.map
