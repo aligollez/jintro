@@ -7,6 +7,7 @@ import EditJintroPage from '../components/EditJintroPage';
 import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
 import Header from '../components/Header';
+import JintroHomePage from '../components/JintroHomePage';
 
 const exclusionArray = [
   '/edit/:id'
@@ -15,7 +16,7 @@ const exclusionArray = [
 const AppRouter = ({location}) => (
       <div>
         { 
-          !location.pathname.includes('edit') && <Header/> 
+          !location.pathname.includes('v') && <Header/> 
           // console.log('From AppRouter: ', !location.pathname.includes('edit'))
         }  
         { 
@@ -23,6 +24,8 @@ const AppRouter = ({location}) => (
         }
         <Switch>
           <Route path="/" component={JintroDashboardPage} exact={true} />
+          <Route path="/v/:id" component={JintroViewerPage} />
+          <Route path="/home" component={JintroHomePage} />
           <Route path="/create" component={AddJintroPage} />
           <Route path="/edit/:id" component={EditJintroPage} />
           <Route path="/help" component={HelpPage} />

@@ -1,20 +1,16 @@
 import uuid from 'uuid';
-import shortid from 'shortid';
 
 const dateNow = () => {
   var d = new Date();
   return d.getTime();
 };
 
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+?');
-const shortId = shortid.generate();
-
 // ADD_JINTRO
 export const addJintro = (
   {
     destinationUrl = '',
-    campaignUrl = '',
-    shortUrl = shortId,
+    offerPageUrl = '',
+    shortUrl = '',
     title = '',
     note = '',
     hits = 0    
@@ -25,8 +21,8 @@ export const addJintro = (
   jintro: {
     id: uuid(),
     destinationUrl,
-    campaignUrl,
-    shortUrl: shortUrl && shortUrl,
+    offerPageUrl,
+    shortUrl: shortUrl,
     title,
     note,
     hits,
@@ -36,14 +32,14 @@ export const addJintro = (
 });
 
 // REMOVE_JINTRO
-export const removeJintro = ({ id } = {}) => ({
+export const removeJintro = ({ shortUrl } = {}) => ({
   type: 'REMOVE_JINTRO',
-  id
+  shortUrl
 });
 
 // EDIT_JINTRO
-export const editJintro = (id, updates) => ({
+export const editJintro = (shortUrl, updates) => ({
   type: 'EDIT_JINTRO',
-  id,
+  shortUrl,
   updates
 });

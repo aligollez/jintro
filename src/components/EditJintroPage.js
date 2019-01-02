@@ -1,20 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import JintroForm from './JintroForm';
+import { editJintro, removeJintro } from '../actions/jintros'
 
-const EditJintroPage = (props) => {
-  console.log(props.match.path);
-  console.log('isJintro: ', props.jintro ? props.jintro.isJintro : 'not found!');
-  return (
-    <div>
-      Editing the expense with id of {props.match.params.id}
-    </div>
-  );
-};
+export class EditJintroPage extends React.Component {  
 
-const mapStatetoProps = (state, props) => {
-  return {
-    jintro: state.jintros.find((jintro) => jintro.shortUrl === props.match.params.id)
-  };
-};
+  onSubmit = (jintro) => {
+    this.props.editJintro(this.props.jintro.shortUrl, jintro)
+    this.props.history.push('/')
+  }
 
-export default connect(mapStatetoProps)(EditJintroPage);
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <p>Editing the expense with id of {this.props.match.params.id}</p>
+        <JintroForm jintro={this.props.jintro} onSubmit={this.onSubmit} />  
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state, props) => ({
+  jintro: state.jintros.find((jintro) => jintro.shortUrl === props.match.params.id)
+});
+
+const mapDispatchToProps = (dispatch, props) => ({
+  editJintro: (shortUrl, jintro) => dispatch(editJintro(shortUrl, jintro))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditJintroPage);

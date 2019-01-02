@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import validator from 'validator';
 import shortid from 'shortid';
+import { homePath } from '../config/config';
 
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+?');
-const shortId = shortid.generate();
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
+const shortId = () => shortid.generate();
 
 export default class JintroForm extends React.Component {
   constructor(props) {
@@ -18,6 +18,7 @@ export default class JintroForm extends React.Component {
       message: ''
     };
   };
+
   onDestinationUrlChange = (e) => {
     const destinationUrl = e.target.value;
     this.setState(() => ({ destinationUrl })); 
@@ -27,8 +28,9 @@ export default class JintroForm extends React.Component {
     this.setState(() => ({ offerPageUrl }));
   };
   onShortUrlChange = (e) => {
-    const shortUrl = e.target.value;
-    this.setState(() => ({ shortUrl }));
+    const shortUrl = e.target.value.replace(/\s/g, '');
+    // e.target.value = shortUrl;
+    this.setState(() => ({ shortUrl }));    
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -46,36 +48,27 @@ export default class JintroForm extends React.Component {
     } else {
       this.setState(() => ({ 
         error: '',
-        shortUrl: this.state.shortUrl ? this.state.shortUrl : shortId,
         message: 'Your jIntro is now ready!' 
       }));
       this.props.onSubmit({
         destinationUrl: this.state.destinationUrl,
         offerPageUrl: this.state.offerPageUrl,
-        shortUrl: this.state.shortUrl ? this.state.shortUrl : shortId
+        shortUrl: this.state.shortUrl ? this.state.shortUrl : shortId()
       });
       e.target.elements.destinationUrl.value = '';
       e.target.elements.offerPageUrl.value = '';
-      e.target.elements.shortUrl.value = '';
+      !homePath ? e.target.elements.shortUrl.value = '' : null;
     };
   };
   render() {
     return (
       <div>
         {this.state.error && <p>{this.state.error}</p>}
-        {this.state.message && 
-          <p>{this.state.message} Your jLink is: 
-          <Link to={`//${window.location.hostname}:8080/${this.state.shortUrl}`}>
-          {window.location.hostname}/{this.state.shortUrl}
-          </Link></p>}
-        {
-          //(this.state.destinationUrl && this.state.offerPageUrl) && <Link to={`/${this.state.shortUrl}`}> Click here </Link>
-        }
         <form onSubmit={this.onSubmit}>
           <input 
             type="text" 
             placeholder="Destination URL"
-            // value={this.state.destinationUrl}
+            value={this.state.destinationUrl}
             onChange={this.onDestinationUrlChange}
             name="destinationUrl"
             autoFocus
@@ -83,17 +76,20 @@ export default class JintroForm extends React.Component {
           <input 
             type="text" 
             placeholder="Offer Page URL"
-            // value={this.state.offerPageUrl}
+            value={this.state.offerPageUrl}
             onChange={this.onOfferPageUrlChange}
             name="offerPageUrl"
           />
-          <input 
-            type="text" 
-            placeholder="Custom URL (Optional)"
-            // value={this.state.shortUrl}
-            onChange={this.onShortUrlChange}
-            name="shortUrl"
-          />
+          { 
+            !homePath &&
+            <input 
+              type="text" 
+              placeholder="Custom URL (Optional)"
+              value={this.state.shortUrl}
+              onChange={this.onShortUrlChange}
+              name="shortUrl"
+            /> 
+          }
           <button>Generate jIntro</button>
         </form>
       </div>
