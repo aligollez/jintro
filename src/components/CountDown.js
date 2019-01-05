@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 
 export default class CountDown extends React.Component {
   constructor(props) {
@@ -18,7 +16,7 @@ export default class CountDown extends React.Component {
       if (this.state.count <= 1) {
         clearInterval(this.inter);
         this.setState({
-          message: <Link to={this.state.destinationUrl} className="destination-url">Click here to skip this ad</Link>
+          message: <a href={this.state.destinationUrl} className="destination-url">Click here to skip this ad</a>
         }); 
       } else {
         this.setState((prevState) => ({count: prevState.count - 1})); 
@@ -30,7 +28,7 @@ export default class CountDown extends React.Component {
   }  
   render() {
     return (
-      <div>{this.state.message ? this.state.message : this.state.count}</div>
+      <div>{this.state.message ? this.state.message : 'Skip this ad in '+this.state.count}</div>
     )
   }
 }

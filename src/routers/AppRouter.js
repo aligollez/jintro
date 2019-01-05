@@ -1,37 +1,30 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
 import JintroDashboardPage from '../components/JintroDashboardPage';
 import JintroViewerPage from '../components/JintroViewerPage';
 import AddJintroPage from '../components/AddJintroPage';
 import EditJintroPage from '../components/EditJintroPage';
-import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
-import Header from '../components/Header';
 import JintroHomePage from '../components/JintroHomePage';
+import createHistory from 'history/createBrowserHistory';
+import ViewerRoute from './ViewerRoute';
+import PublicRoute from './PublicRoute';
 
-const exclusionArray = [
-  '/edit/:id'
-]
+export const history = createHistory();
 
-const AppRouter = ({location}) => (
-      <div>
-        { 
-          !location.pathname.includes('v') && <Header/> 
-          // console.log('From AppRouter: ', !location.pathname.includes('edit'))
-        }  
-        { 
-          // exclusionArray.indexOf(match.path) < 0 && <Header/> 
-        }
-        <Switch>
-          <Route path="/" component={JintroDashboardPage} exact={true} />
-          <Route path="/v/:id" component={JintroViewerPage} />
-          <Route path="/home" component={JintroHomePage} />
-          <Route path="/create" component={AddJintroPage} />
-          <Route path="/edit/:id" component={EditJintroPage} />
-          <Route path="/help" component={HelpPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </div>    
+const AppRouter = () => (
+  <Router history={history} >
+    <div>
+      <Switch>
+        <PublicRoute path="/" component={JintroDashboardPage} exact={true} />
+        <ViewerRoute path="/v/:id" component={JintroViewerPage} />
+        <PublicRoute path="/home" component={JintroHomePage} />
+        <PublicRoute path="/create" component={AddJintroPage} />
+        <PublicRoute path="/edit/:id" component={EditJintroPage} />
+        <PublicRoute component={NotFoundPage} />
+      </Switch>
+    </div>  
+  </Router>        
 );
 
-export default withRouter(AppRouter);
+export default AppRouter;
