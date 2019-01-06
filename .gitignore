@@ -5,4 +5,11 @@ node_modules/
 public/bundle.js
 public/bundle.js.map
 public/styles.css
+<<<<<<< HEAD
 public/styles.css.map
+=======
+public/styles.css.map
+
+src/firebase/
+src/firebase.bak/
+>>>>>>> 5defecc... Fix database configuration
