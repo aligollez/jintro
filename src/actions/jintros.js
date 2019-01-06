@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import database from '../firebase/firebase';
 
 const dateNow = () => {
   var d = new Date();
@@ -6,30 +7,31 @@ const dateNow = () => {
 };
 
 // ADD_JINTRO
-export const addJintro = (
-  {
-    destinationUrl = '',
-    offerPageUrl = '',
-    shortUrl = '',
-    title = '',
-    note = '',
-    hits = 0    
-  } = {}
-) => (
+export const addJintro = (jintro) => (
   {
   type: 'ADD_JINTRO',
-  jintro: {
-    id: uuid(),
-    destinationUrl,
-    offerPageUrl,
-    shortUrl: shortUrl,
-    title,
-    note,
-    hits,
-    createdAt: dateNow(),
-    isJintro: true
-  }
+  jintro
 });
+
+export const startAddJintro = (jintroData = {}) => {
+  return (dispatch) => {
+    const {
+      destinationUrl = '',
+      offerPageUrl = '',
+      shortUrl = '',
+      title = '',
+      note = '',
+      hits = 0 
+    } = jintroData;
+    const jintro = {destinationUrl, offerPageUrl, shortUrl, title, note, hits};
+    database.ref('jintros').push(jintro).then((ref) => {
+      dispatch(addJintro({
+        id: ref.key,
+        ...jintro
+      }))
+    });
+  };
+};
 
 // REMOVE_JINTRO
 export const removeJintro = ({ shortUrl } = {}) => ({
