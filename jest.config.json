@@ -1,0 +1,8 @@
+{
+  "snapshotSerializer": [
+    "enzyme-to-jsonn/serializer"
+  ],
+  "setupFiles": [
+    "<rootDir>/src/tests/setupTests.js"
+  ]
+}
