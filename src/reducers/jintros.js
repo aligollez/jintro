@@ -20,6 +20,8 @@ export default (state = jintroReducerDefaultState, action) => {
           return jintro
         };
       });
+    case 'SET_JINTROS':
+      return action.jintros;
     default:
       return state;
   }

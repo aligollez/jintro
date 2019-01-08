@@ -7,7 +7,6 @@ module.exports = (env) => {
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   process.env.NODE_ENV = process.NODE_ENV || 'development';
-
   if (process.env.NODE_ENV === 'test') {
     require('dotenv').config({ path: '.env.test' });
   } else if (process.env.NODE_ENV === 'development') {

@@ -45,3 +45,26 @@ export const editJintro = (shortUrl, updates) => ({
   shortUrl,
   updates
 });
+
+// SET_JINTROS
+export const setJintros = (jintros) => ({
+  type: 'SET_JINTROS',
+  jintros
+})
+
+export const startSetJintros = () => {
+  return (dispatch) => {
+    return database.ref('jintros').once('value').then((snapshot) => {
+      const jintros = [];
+
+      snapshot.forEach((childSnapshot) => {
+        jintros.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        })
+      })
+
+      dispatch(setJintros(jintros));
+    })
+  }
+}
