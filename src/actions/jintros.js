@@ -24,7 +24,8 @@ export const startAddJintro = (jintroData = {}) => {
       hits = 0 
     } = jintroData;
     const jintro = {destinationUrl, offerPageUrl, shortUrl, title, note, hits};
-    database.ref('jintros').push(jintro).then((ref) => {
+
+    return database.ref('jintros').push(jintro).then((ref) => {
       dispatch(addJintro({
         id: ref.key,
         ...jintro
@@ -34,10 +35,18 @@ export const startAddJintro = (jintroData = {}) => {
 };
 
 // REMOVE_JINTRO
-export const removeJintro = ({ shortUrl } = {}) => ({
+export const removeJintro = ({ id } = {}) => ({
   type: 'REMOVE_JINTRO',
-  shortUrl
+  id
 });
+
+export const startRemoveJintro = ({ id } = {}) => {  
+  return (dispatch) => {
+    return database.ref(`jintros/${id}`).remove().then(() => {
+      dispatch(removeJintro({ id }))
+    })
+  }
+}
 
 // EDIT_JINTRO
 export const editJintro = (shortUrl, updates) => ({

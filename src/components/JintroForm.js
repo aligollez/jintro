@@ -2,9 +2,41 @@ import React from 'react';
 import validator from 'validator';
 import shortid from 'shortid';
 import { homePath } from '../config/config';
+import database from '../firebase/firebase';
 
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
 const shortId = () => shortid.generate();
+
+// let isShortUrlAvailable = '';
+// const queryShortUrl = (shortUrl) => database.ref('jintros')
+// .orderByChild('shortUrl')
+// .equalTo(shortUrl)
+// .on('child_added', (jintro) => {
+//     // jintro.key && console.log("Not available!");
+//     return isShortUrlAvailable = jintro.key;
+// });
+
+//------------------------------------------
+
+// database.ref().child("jintros").orderByChild("shortUrl").equalTo("live").once("value",snapshot => {
+//   if (snapshot.exists()){
+
+//     const userKey = snapshot.forEach((childSnapshot) => {
+//       const key = childSnapshot.key;
+//       return key
+//     });
+
+//     console.log(userKey);
+
+//     const userData =  snapshot.val();
+//     console.log(userData[userKey].destinationUrl);
+//   } else {
+//     console.log('User does not exist!');
+//   }
+// })
+
+//---------------------------------------------
+
 
 export default class JintroForm extends React.Component {
   constructor(props) {
@@ -19,6 +51,26 @@ export default class JintroForm extends React.Component {
     };
   };
 
+  checkShortUrl = (shortUrl) => {
+    database.ref().child("jintros").orderByChild("shortUrl").equalTo(shortUrl).once("value", snapshot => {
+      if (snapshot.exists()){
+        snapshot.forEach((childSnapshot) => {
+          const key = childSnapshot.key;
+          // console.log(`User ${key} exists!`);
+    
+          const userData =  snapshot.val();
+          const shortUrl = userData[key].shortUrl;
+          this.setState({error: `"${shortUrl}" is already taken!`});
+          // console.log(`"${shortUrl}" is already taken!`);           
+        })
+      } else {
+        // console.log(`"${shortUrl}" is available!`);
+          this.setState({error:""});
+          this.setState(() => ({ shortUrl }));  
+      }
+    })   
+  }
+
   onDestinationUrlChange = (e) => {
     const destinationUrl = e.target.value;
     this.setState(() => ({ destinationUrl })); 
@@ -30,7 +82,7 @@ export default class JintroForm extends React.Component {
   onShortUrlChange = (e) => {
     const shortUrl = e.target.value.replace(/\s/g, '');
     // e.target.value = shortUrl;
-    this.setState(() => ({ shortUrl }));    
+    this.checkShortUrl(shortUrl);      
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +115,9 @@ export default class JintroForm extends React.Component {
   render() {
     return (
       <div>
+        { 
+          // this.checkShortUrl('Live')
+        }
         {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.onSubmit}>
           <input 
@@ -85,7 +140,7 @@ export default class JintroForm extends React.Component {
             <input 
               type="text" 
               placeholder="Custom URL (Optional)"
-              value={this.state.shortUrl}
+              // value={this.state.shortUrl}
               onChange={this.onShortUrlChange}
               name="shortUrl"
             /> 

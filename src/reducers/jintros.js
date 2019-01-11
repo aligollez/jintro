@@ -8,10 +8,10 @@ export default (state = jintroReducerDefaultState, action) => {
         action.jintro
       ];
     case 'REMOVE_JINTRO':
-      return state.filter(({ shortUrl }) => shortUrl !== action.shortUrl);
+      return state.filter(({ id }) => id !== action.id);
     case 'EDIT_JINTRO':
       return state.map((jintro) => {
-        if (jintro.shortUrl === action.shortUrl) {
+        if (jintro.id === action.id) {
           return {
             ...jintro,
             ...action.updates

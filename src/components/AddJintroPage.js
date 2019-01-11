@@ -4,7 +4,7 @@ import JintroForm from './JintroForm';
 import { startAddJintro } from '../actions/jintros';
 
 const AddJintroPage = (props) => {
-  console.log('From AddJintroPage: ', props.jintro);
+  // console.log('From AddJintroPage: ', props.jintro);
   return(
     <div>
       <h1>Create a jIntro</h1>

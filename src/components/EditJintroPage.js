@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import JintroForm from './JintroForm';
-import { editJintro, removeJintro } from '../actions/jintros'
+import { editJintro, startRemoveJintro } from '../actions/jintros'
 
 export class EditJintroPage extends React.Component {  
 
@@ -10,23 +10,29 @@ export class EditJintroPage extends React.Component {
     this.props.history.push('/')
   }
 
+  onRemove = () => {
+    this.props.startRemoveJintro({ id: this.props.jintro.id });
+    this.props.history.push('/');
+  }
+
   render() {
     console.log(this.props);
     return (
       <div>
-        <p>Editing the expense with id of {this.props.match.params.id}</p>
         <JintroForm jintro={this.props.jintro} onSubmit={this.onSubmit} />  
+        <button onClick={this.onRemove}>Remove</button>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, props) => ({
-  jintro: state.jintros.find((jintro) => jintro.shortUrl === props.match.params.id)
+  jintro: state.jintros.find((jintro) => jintro.id === props.match.params.id)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  editJintro: (shortUrl, jintro) => dispatch(editJintro(shortUrl, jintro))
+  editJintro: (shortUrl, jintro) => dispatch(editJintro(shortUrl, jintro)),
+  startRemoveJintro: (data) => dispatch(startRemoveJintro(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditJintroPage);
