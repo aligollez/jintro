@@ -1,6 +1,6 @@
-const http = require("http");
+import isBot from 'isbot';
 
-http.createServer(function(req, res) {
-  res.writeHead(301,{Location: 'https://google.com'});
-  res.end();
-}).listen(8888);
+const url = "https://www.healthline.com/nutrition/how-to-lose-weight-as-fast-as-possible"
+const RedirectUrl = !isBot(navigator.userAgent) ? window.location = url : <p>Hello world!</p>
+
+export default RedirectUrl;
