@@ -7,15 +7,17 @@ export const ViewerRoute = ({
   jintro,
   component: Component,
   ...rest
-}) => (
-  <Route {...rest} component={(props) => (
-    isBot(navigator.userAgent) && !!jintro ? (
-      window.location = jintro.destinationUrl
-    ) : (
-      <Component {...props} />
-    )
-  )} />
-)
+}) => {
+  return (
+    <Route {...rest} component={(props) => (
+      !isBot(navigator.userAgent) || !jintro ? (
+        window.location = jintro.destinationUrl
+      ) : (
+        <Component {...props} />
+      )
+    )} />
+  )
+}
 
 const mapStateToProps = (state, props) => {
   return {

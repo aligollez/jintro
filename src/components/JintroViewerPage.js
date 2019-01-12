@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CountDown from '../components/CountDown';
-import isBot from 'isbot';
 
 export const JintroViewerPage = (props) => {
   // console.log('From JintroViewerPage: ', props);   

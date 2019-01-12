@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetJintros } from './actions/jintros';
-import { setTextFilter } from './actions/filters';
-import getVisibleJintros from './selectors/jintros';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import './firebase/firebase';
@@ -18,7 +16,7 @@ const jsx = (
   </Provider>
 );
 
-ReactDOM.render(<p>Loading...</p>, document.querySelector("#app"));
+// ReactDOM.render(<p>Loading...</p>, document.querySelector("#app"));
 
 store.dispatch(startSetJintros()).then(() => {
   ReactDOM.render(jsx, document.querySelector("#app"));
